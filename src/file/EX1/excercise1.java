@@ -37,6 +37,6 @@ public class excercise1 {
         //Hiển thị 1 loại file cho trước (filtering)
 //        Arrays.stream(Objects.requireNonNull(p.listFiles())).filter(item -> item.getName().contains(".txt")).toList().forEach(System.out::println);
 
-
+        System.out.println("check");
     }
 }
