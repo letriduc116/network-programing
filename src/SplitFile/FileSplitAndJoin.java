@@ -32,7 +32,6 @@ public class FileSplitAndJoin {
             fos.write(buffer,0,byteRead);
             remain  -= byteRead;
         }
-
         return true;
     }
 
