@@ -83,10 +83,11 @@ public class packUnpack {
 
 
     public static void main(String[] args) throws IOException {
-//        String folder = "G:\\temp\\pack";
-//        String packegefile = "G:\\temp\\abc_pack";
+        String folder = "G:\\temp\\pack";
+        String packegefile = "G:\\temp\\abc_pack";
 //        pack(folder,packegefile);
-//        String extractName = "4.jpg";
-//        String destFile = "G:\\temp\\4.jpg";
+//        String extractName = "text.txt";
+//        String destFile = "G:\\temp\\text.txt";
+//        unPack(packegefile, extractName, destFile);
     }
 }
