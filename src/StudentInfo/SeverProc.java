@@ -80,7 +80,6 @@ public class SeverProc extends Thread {
                         List<Student> listByName = dao.findByName(param);
                         response = makeResponse(listByName);
                         break;
-                        break;
                     default: response = "lenh khong hop le";
                 }
                 netOut.println(response);
@@ -94,7 +93,7 @@ public class SeverProc extends Thread {
     private String makeResponse(List<Student> list) {
         String res = "";
         if (list.isEmpty()) {
-            return "khong tim thay";
+            return " khong tim thay";
         }
         for (Student student : list) {
             res += student.toString() + "\n"; // nen dung StringBuider

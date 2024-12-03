@@ -56,7 +56,7 @@ public class Dao {
     public List<Student> findByName(String name) {
         List<Student> list = new ArrayList<>();
         for (Student s : ls) {
-            if (s.getName().equalsIgnoreCase(name)) {
+            if (s.getName().toLowerCase().contains(name.toLowerCase())) {
                 list.add(s);
             }
         }

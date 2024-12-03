@@ -41,6 +41,6 @@ public class Student {
     @Override
     public String toString() {
         return
-                "id=" + id + "\t name='" + name  + "\t gpa=" + gpa ;
+                " id: " + id + "\t name: " + name  + "\t gpa: " + gpa + "\n";
     }
 }
