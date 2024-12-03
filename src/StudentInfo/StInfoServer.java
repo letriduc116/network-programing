@@ -1,6 +1,4 @@
-package TH9;
-
-import StudentInfomation.OneConnect;
+package StudentInfo;
 
 import java.io.IOException;
 import java.net.ServerSocket;

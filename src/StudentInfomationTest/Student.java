@@ -1,4 +1,4 @@
-package StudentInfomation;
+package StudentInfomationTest;
 
 public class Student {
     private String id;

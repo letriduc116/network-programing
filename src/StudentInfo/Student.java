@@ -1,4 +1,4 @@
-package TH9;
+package StudentInfo;
 
 public class Student {
     int id;
@@ -36,5 +36,11 @@ public class Student {
 
     public void setGpa(double gpa) {
         this.gpa = gpa;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "id=" + id + "\t name='" + name  + "\t gpa=" + gpa ;
     }
 }

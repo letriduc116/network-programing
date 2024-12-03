@@ -1,4 +1,4 @@
-package StudentInfomation;
+package StudentInfomationTest;
 
 import java.util.HashMap;
 import java.util.Map;

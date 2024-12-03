@@ -1,4 +1,4 @@
-package StudentInfomation;
+package StudentInfomationTest;
 
 import java.util.ArrayList;
 import java.util.List;

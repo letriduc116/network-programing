@@ -1,4 +1,4 @@
-package TH9;
+package StudentInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,10 @@ public class Dao {
         ls.add(new Student(4,"dao duy nhat",7.5));
 
         lu = new ArrayList<User>();
-        lu.add(new User("admin", "12345"));
+//        lu.add(new User("admin", "12345"));
         lu.add(new User("triduc", "23456"));
+        lu.add(new User("xuandong", "12345"));
+
     }
 
 
@@ -45,6 +47,16 @@ public class Dao {
         List<Student> list = new ArrayList<>();
         for (Student s : ls) {
             if (s.getId() == id) {
+                list.add(s);
+            }
+        }
+        return list;
+    }
+
+    public List<Student> findByName(String name) {
+        List<Student> list = new ArrayList<>();
+        for (Student s : ls) {
+            if (s.getName().equalsIgnoreCase(name)) {
                 list.add(s);
             }
         }

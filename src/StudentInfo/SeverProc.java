@@ -1,4 +1,4 @@
-package TH9;
+package StudentInfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,65 +25,66 @@ public class SeverProc extends Thread {
 
     public void run() {
         String  line, response;
+        String lastUserName = ""; // luu lai de kiem tra pass
         boolean res;
-        String lastUserName = null;
         try {
             netOut.println("Ready...");
-            //login
+            //login (chua login)
             while (!isLogin) {
                 response = "";
                 line = netIn.readLine();
                 if ("QUIT".equalsIgnoreCase(line)) break;
-                analyzeRequest(line);
+                analyzeRequest(line); //tach phan tu: com (lenh/tu khoa) va param (tham so)
                 switch (com) {
                     case "USER":
                         res = dao.checkUserName(param);
                         if (res) {
-                            response = "Ok user";
+                            response = " Ok USER";
                             lastUserName = param;
                         } else  {
-                            response = "Error user";
+                            response = " Error USER";
                             lastUserName = null;
                         }
                         break;
                     case "PASS":
                         if (lastUserName ==null) {
-                            response = "Error user";
+                            response = "Error user must be login";
                         } else {
                             res = dao.login (lastUserName, param);
                             if (res) {
                                 isLogin = true;
-                                response = "Ok login";
+                                response = " Ok login";
                             } else {
-                                response = "Error login";
+                                response = " Error login";
                             }
                         }
-                        break;
-                        default: response = "lenh khong hop le";
-                }
-                netOut.println(response);
-            }
-
-            //search
-            while (isLogin) {
-                response= "";
-                line = netIn.readLine();
-                if ("QUIT".equalsIgnoreCase(line)) break;
-                analyzeRequest(line);
-                switch (com) {
-                    case "FBID":
-                        int id = Integer.parseInt(param);
-                        List<Student> list = dao.findById(id);
-                        response = makeResponse (list);
-                        break;
-                    case "FBN":
-
                         break;
                     default: response = "lenh khong hop le";
                 }
                 netOut.println(response);
             }
 
+            //search (da login)
+            while (isLogin) {
+                response= "";
+                line = netIn.readLine();
+                if ("QUIT".equalsIgnoreCase(line)) break;
+                analyzeRequest(line); //tach phan tu: com (lenh) va param (tham so)
+                switch (com) {
+                    case "FBID":
+                        int id = Integer.parseInt(param);
+                        List<Student> list = dao.findById(id);
+                        response = makeResponse (list);
+                        break;
+                    case "FBN": // tuong tu
+                        List<Student> listByName = dao.findByName(param);
+                        response = makeResponse(listByName);
+                        break;
+                        break;
+                    default: response = "lenh khong hop le";
+                }
+                netOut.println(response);
+            }
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,10 +94,10 @@ public class SeverProc extends Thread {
     private String makeResponse(List<Student> list) {
         String res = "";
         if (list.isEmpty()) {
-            return "kh tim thay";
+            return "khong tim thay";
         }
         for (Student student : list) {
-            res += student.toString() + "\n";
+            res += student.toString() + "\n"; // nen dung StringBuider
         }
         return res;
     }
@@ -104,7 +105,7 @@ public class SeverProc extends Thread {
     private void analyzeRequest(String line) {
         StringTokenizer stk = new  StringTokenizer(line);
         com = stk.nextToken().toUpperCase();
-        param = line.substring(com.length()).trim();
+        param = line.substring(com.length()).trim(); // cat khoang trang dau cuoi
 
     }
 }

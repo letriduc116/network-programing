@@ -1,4 +1,4 @@
-package TH9;
+package StudentInfo;
 
 public class User {
     String username, password;
