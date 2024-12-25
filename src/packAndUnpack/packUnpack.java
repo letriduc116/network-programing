@@ -34,9 +34,9 @@ public class packUnpack {
         }
         index = 0;
         for (File f: files) { //data
-            pos = raf.getFilePointer();
-            raf.seek(headPos[index++]);
-            raf.writeLong(pos);
+            pos = raf.getFilePointer(); // lay vi tri hien tai
+            raf.seek(headPos[index++]); // di chuyen den vi tri header
+            raf.writeLong(pos);// ghi lai vi tri data
             raf.seek(pos);
             FileInputStream fis = new FileInputStream(f);
             while ((byteRead = fis.read(buff)) != -1) {
@@ -70,7 +70,7 @@ public class packUnpack {
             pos = raf.readLong();
             len = raf.readLong();
             name = raf.readUTF();
-            if (extractFile.equals(name)) { //extract
+            if (name.equalsIgnoreCase(extractFile)) { //extract
                 raf.seek(pos);
                 FileOutputStream fos = new FileOutputStream(destFile);
                 dataCopy(raf,fos,len);
@@ -85,7 +85,7 @@ public class packUnpack {
     public static void main(String[] args) throws IOException {
         String folder = "G:\\temp\\pack";
         String packegefile = "G:\\temp\\abc_pack";
-//        pack(folder,packegefile);
+        pack(folder,packegefile);
 //        String extractName = "text.txt";
 //        String destFile = "G:\\temp\\text.txt";
 //        unPack(packegefile, extractName, destFile);

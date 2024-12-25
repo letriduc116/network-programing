@@ -61,7 +61,9 @@ public class FileSplitAndJoin {
     public static void main(String[] args) throws IOException {
         String path = "G:\\temp\\text.txt";
         int size = 102400;
+        String partFileName = path + ".001";
         split(path, size);
+//        join(partFileName);
 
     }
 }

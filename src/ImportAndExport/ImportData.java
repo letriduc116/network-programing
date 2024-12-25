@@ -43,7 +43,6 @@ public class ImportData {
             }
 
         }
-
         br.close();
         return list;
     }
