@@ -8,6 +8,8 @@ public class UploadServer {
     thoát  (client) : Exit
     Server duy trì liên tục nên không thoát được (đa luồng)
      */
+
+    // class này để khởi tạo ServerSocket và chờ kết nối từ Client
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(2000);
         while (true) {

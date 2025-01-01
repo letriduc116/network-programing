@@ -8,7 +8,7 @@ public class FileSplitAndJoin {
         int fileNumber = 1;
 
         //loop
-        while (true){
+        while (true) {
             String dest = source + createExt(fileNumber);
             FileOutputStream fos = new FileOutputStream(dest);
             boolean hasMoreData = dataCopy(fis, fos, pSize);
@@ -25,12 +25,12 @@ public class FileSplitAndJoin {
         byte[] buffer = new byte[102400];
         long remain = pSize; //so luong byte can doc
 
-        while (remain > 0){
-            int byteMustRead = remain > buffer.length ? buffer.length: (int) remain;
-            int byteRead =  fis.read(buffer);
+        while (remain > 0) {
+            int byteMustRead = remain > buffer.length ? buffer.length : (int) remain;
+            int byteRead = fis.read(buffer);
             if (byteRead == -1) return false;
-            fos.write(buffer,0,byteRead);
-            remain  -= byteRead;
+            fos.write(buffer, 0, byteRead);
+            remain -= byteRead;
         }
         return true;
     }
@@ -38,8 +38,8 @@ public class FileSplitAndJoin {
     // 1->001
     public static String createExt(int fileNumber) {
         if (fileNumber < 10) return ".00" + fileNumber;
-        else if (fileNumber < 100) return  ".0" +fileNumber;
-        else  return "." +fileNumber;
+        else if (fileNumber < 100) return ".0" + fileNumber;
+        else return "." + fileNumber;
     }
 
     public static void join(String partFilename) throws IOException {
@@ -51,7 +51,7 @@ public class FileSplitAndJoin {
             File file = new File(source);
             if (!file.exists()) break;
             FileInputStream fis = new FileInputStream(source);
-            dataCopy(fis,fos, (int) file.length());
+            dataCopy(fis, fos, (int) file.length());
             fis.close();
             fileNumber++;
         }
@@ -60,7 +60,7 @@ public class FileSplitAndJoin {
 
     public static void main(String[] args) throws IOException {
         String path = "G:\\temp\\text.txt";
-        int size = 102400;
+        int size = 102400 / 5;
         String partFileName = path + ".001";
         split(path, size);
 //        join(partFileName);

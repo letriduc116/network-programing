@@ -7,6 +7,8 @@ import java.net.*;
 import java.util.StringTokenizer;
 
 public class OneConnect extends Thread {
+    // Sever phải đọc lệnh từ client, sau đó thực hiện lệnh đó
+    // Luồng trên Server để xử lý lệnh upload file từ Client.
     Socket socket;
     DataInputStream netIn;
     DataOutputStream netOut;
@@ -22,13 +24,13 @@ public class OneConnect extends Thread {
         String com, dest;
         try {
             while (true) {
-                line = netIn.readUTF();
+                line = netIn.readUTF(); // lúc này:  line = "UP G:\\temp\\BBB\\abcCopy.pdf"
                 if ("EXIT".equalsIgnoreCase(line)) break;
                 StringTokenizer stk = new StringTokenizer(line);
-                com = stk.nextToken();
-                dest = stk.nextToken();
-                long size = netIn.readLong();
-                FileOutputStream fos = new FileOutputStream(dest);
+                com = stk.nextToken(); // com = "UP"
+                dest = stk.nextToken(); // dest = "G:\\temp\\BBB\\abcCopy.pdf"
+                long size = netIn.readLong();// Server nhận kích thước tệp size mà client đã gửi trước đó.
+                FileOutputStream fos = new FileOutputStream(dest); // mở file abcCopy.pdf
                 dataCopy(netIn, fos, size);
                 fos.close();
                 netOut.writeUTF("DONE");

@@ -4,6 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class packUnpack {
+    /*
+[Input Folder]
+  |--- file1.txt
+  |--- file2.jpg
+  |--- file3.doc
+      |
+      v
+ [Packing Process]
+      |
+      v
+[Package File]
+  |--- Header Section
+  |       |--- Metadata of file1 (position, size, name)
+  |       |--- Metadata of file2 (position, size, name)
+  |       |--- Metadata of file3 (position, size, name)
+  |
+  |--- Data Section
+          |--- Data of file1
+          |--- Data of file2
+          |--- Data of file3
+
+ */
+
     // Loc file 1 cap
     public static List<File> getFiles (String folder) {
         List<File> files = new ArrayList<File>();
@@ -20,24 +43,26 @@ public class packUnpack {
         RandomAccessFile raf = new RandomAccessFile(packegefile , "rw");
         List<File> files = getFiles(folder);
         raf.writeInt(files.size()); //so luong file co trong folder
-        long pos = 0; // mac dinh vi tri ban dau la dung
+        long pos = 0; // mac dinh vi tri ban dau la dung, Vị trí của dữ liệu file trong package file
         long[] headPos = new long[files.size()] ; // luu vi tri cac pos
         int index = 0; // vi tri cua pos1
+
         byte[] buff = new byte[102400];
         int byteRead;
 
         for (File f: files) { //header
-            headPos[index++] = raf.getFilePointer();
-            raf.writeLong(pos);
-            raf.writeLong(f.length());
-            raf.writeUTF(f.getName());
+            headPos[index++] = raf.getFilePointer(); //luu lai vi tri hien tai cua header
+            raf.writeLong(pos); // Ghi vị trí dữ liệu (sẽ cập nhật sau)
+            raf.writeLong(f.length()); // Ghi kích thước file (so byte)
+            raf.writeUTF(f.getName()); // Ghi tên file
         }
+
         index = 0;
         for (File f: files) { //data
-            pos = raf.getFilePointer(); // lay vi tri hien tai
-            raf.seek(headPos[index++]); // di chuyen den vi tri header
-            raf.writeLong(pos);// ghi lai vi tri data
-            raf.seek(pos);
+            pos = raf.getFilePointer(); //lay vi tri hien tai cua data, Quay lại vị trí của header đã ghi trước đó (lấy từ mảng headPos).
+            raf.seek(headPos[index++]); // quay lại phần header đã được ghi trước đó (vị trí được lưu trong headPos).
+            raf.writeLong(pos);// ghi lai vi tri data, cap nhat vi tri du lieu vao header
+            raf.seek(pos);  // Quay lại vị trí dữ liệu để ghi dữ liệu
             FileInputStream fis = new FileInputStream(f);
             while ((byteRead = fis.read(buff)) != -1) {
                 raf.write(buff, 0, byteRead);
@@ -55,7 +80,7 @@ public class packUnpack {
             int byteMustRead = remain > buffer.length ? buffer.length: (int) remain;
             int byteRead =  fis.read(buffer);
             if (byteRead == -1) return false;
-            fos.write(buffer,0,byteRead);
+            fos.write(buffer,0,byteMustRead);
             remain  -= byteRead;
         }
         return true;
@@ -85,9 +110,10 @@ public class packUnpack {
     public static void main(String[] args) throws IOException {
         String folder = "G:\\temp\\pack";
         String packegefile = "G:\\temp\\abc_pack";
-        pack(folder,packegefile);
-//        String extractName = "text.txt";
-//        String destFile = "G:\\temp\\text.txt";
+//        pack(folder,packegefile);
+
+//        String extractName = "TA.pdf";
+//        String destFile = "G:\\temp\\TA_copy.pdf";
 //        unPack(packegefile, extractName, destFile);
     }
 }
